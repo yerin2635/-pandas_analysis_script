@@ -471,7 +471,7 @@ def traffic_discount(using_df, pricing_df, date):
         write_file(result_df, str(billing_account))
 
 
-@click.command(help="製作圖表")
+@click.command(help="選擇要查看的服務並製作成圖表")
 @click.argument("csv_path", nargs=1)
 @click.option("--service", type=str, help="請填入要查詢的服務")
 @click.option("--show", type=bool, is_flag=True, help="查看圖表")
