@@ -1,3 +1,4 @@
+from __future__ import print_function
 from datetime import date
 import time
 import click
@@ -461,7 +462,7 @@ def traffic_discount(using_df, pricing_df, date):
 
     new_usging = one_using_df.join(new_pricing_df.set_index("SKU ID"), on="sku.id")
     new_usging["cost2"] = new_usging["cost"] * new_usging["Effective discount"]
-    new_usging = pd.DataFrame(new_usging.sum())
+    new_usging = pd.DataFrame(new_usging.sum(numeric_only=True))
     new_usging.reset_index(inplace=True)
 
     # 將兩張表合併
@@ -469,6 +470,8 @@ def traffic_discount(using_df, pricing_df, date):
     for billing_account in using_df.groupby(["billing_account_id"]).groups.keys():
         result_df = total.loc[total["billing_account_id"] == billing_account]
         write_file(result_df, str(billing_account))
+        end = time.time()
+        print(end-start)
 
 
 @click.command(help="選擇要查看的服務並製作成圖表")
